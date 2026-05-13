@@ -1,26 +1,18 @@
-# Nom de ton jeu
+# Nom du fichier de sortie
 TARGET      := TrafficRacer
-# Dossier du code
-SOURCES     := source
-# Dossier des images
-DATA        := gfx
-# Dossier de construction
-BUILD       := build
-# Dossier de sortie
-ROMFS       := romfs
 
-include $(DEVKITARM)/3ds_rules
-
-# Options de compilation
-LDFLAGS     := -g -marm -mfloat-abi=hard -mfpu=vfpv2
+# Bibliothèques à utiliser
 LIBS        := -lcitro2d -lcitro3d -lctru -lm
 
-# C'est ici que GitHub fabrique le .3dsx
+# Options de compilation
+ARCH        := -march=armv6k -mtune=mpcore -mfloat-abi=hard -mfpu=vfp
+CFLAGS      := -g -Wall -O2 -mword-relocations $(ARCH)
+LDFLAGS     := -specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(TARGET).map
+
+# Commande par défaut
 all: $(TARGET).3dsx
 
 $(TARGET).3dsx: $(TARGET).elf
 
-$(TARGET).elf: $(SOURCES)/main.c
-	@mkdir -p $(BUILD)
-	$(CC) $(LDFLAGS) $(SOURCES)/main.c $(LIBS) -o $(TARGET).elf
-
+$(TARGET).elf: source/main.c
+	arm-none-eabi-gcc $(CFLAGS) source/main.c $(LDFLAGS) $(LIBS) -o $(TARGET).elf
