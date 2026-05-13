@@ -10,14 +10,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install 3DS Libraries
+        run: |
+          dkp-pacman -Syu --noconfirm 3ds-citro2d 3ds-citro3d 3ds-dev
+
       - name: Build project
         run: |
           make
-
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: TrafficRacer-3DS
           path: |
             *.3dsx
-            *.cia
