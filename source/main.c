@@ -9,7 +9,7 @@ int main() {
     
     C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 
-    // Chargement de l'image avec l'extension en majuscules
+    // Chargement de l'image (extension PNG en majuscules)
     C2D_SpriteSheet spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/car1.PNG");
     
     if (!spriteSheet) {
@@ -30,7 +30,6 @@ int main() {
         C2D_TargetClear(top, C2D_Color32f(0.2f, 0.2f, 0.2f, 1.0f));
         C2D_SceneBegin(top);
 
-        // Affiche la voiture (X:180, Y:100)
         C2D_DrawImageAt(voiture, 180, 100, 0.5f, NULL, 1.0f, 1.0f);
 
         C3D_FrameEnd(0);
