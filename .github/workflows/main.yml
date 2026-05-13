@@ -8,14 +8,14 @@ jobs:
     container: devkitpro/devkitarm:latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build project
         run: |
           make
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: TrafficRacer-3DS
           path: |
