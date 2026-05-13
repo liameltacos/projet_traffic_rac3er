@@ -1,29 +1,27 @@
-name: Build 3DS Game
+name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm:latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y make
-          /opt/devkitpro/portlibs/3ds/bin/arm-none-eabi-pkg-config --version
-
-      - name: Build project
+      - name: Build
         run: |
           make
 
-      - name: Upload artifact
+      - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: TrafficRacer-3DS
+          name: MonJeu3DS
           path: |
             *.3dsx
             *.cia
