@@ -9,13 +9,13 @@ int main() {
     
     C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 
-    // Chargement de l'image (bien vérifier le nom exact)
+    // Chargement de l'image avec l'extension en majuscules
     C2D_SpriteSheet spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/car1.PNG");
     
     if (!spriteSheet) {
         while (aptMainLoop()) {
             C3D_FrameBegin(C3D_FRAME_SYNCHRPP);
-            C2D_TargetClear(top, C2D_Color32f(1.0f, 0.0f, 0.0f, 1.0f)); // Rouge si erreur
+            C2D_TargetClear(top, C2D_Color32f(1.0f, 0.0f, 0.0f, 1.0f));
             C3D_FrameEnd(0);
         }
     }
@@ -27,10 +27,10 @@ int main() {
         if (hidKeysDown() & KEY_START) break; 
 
         C3D_FrameBegin(C3D_FRAME_SYNCHRPP);
-        C2D_TargetClear(top, C2D_Color32f(0.2f, 0.2f, 0.2f, 1.0f)); 
+        C2D_TargetClear(top, C2D_Color32f(0.2f, 0.2f, 0.2f, 1.0f));
         C2D_SceneBegin(top);
 
-        // Affiche la voiture
+        // Affiche la voiture (X:180, Y:100)
         C2D_DrawImageAt(voiture, 180, 100, 0.5f, NULL, 1.0f, 1.0f);
 
         C3D_FrameEnd(0);
