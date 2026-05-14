@@ -12,12 +12,11 @@ jobs:
 
       - name: Install 3DS Libraries
         run: |
-          # On installe les outils indispensables
+          # On installe les outils avec les noms de paquets officiels
           dkp-pacman -Syu --noconfirm 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
 
       - name: Build project
         run: |
-          # On lance la compilation
           make
           
       - name: Upload artifact
