@@ -1,7 +1,5 @@
 name: Build 3DS Game
-
 on: [push, pull_request]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,19 +7,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install 3DS Libraries
         run: |
-          # Le "yes |" permet de répondre automatiquement aux questions de l'installateur
           yes | dkp-pacman -Syu --noconfirm 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
-
       - name: Build project
-        run: |
-          make
-          
+        run: make
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: TrafficRacer-3DS
-          path: |
-            *.3dsx
+          path: "*.3dsx"
