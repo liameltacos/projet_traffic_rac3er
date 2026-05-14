@@ -12,8 +12,9 @@ jobs:
 
       - name: Install 3DS Libraries
         run: |
-          # On installe le groupe complet pour ne rien oublier
-          dkp-pacman -S --noconfirm 3ds-dev
+          # Le "yes |" répond oui automatiquement à toutes les questions
+          yes | dkp-pacman -Syu
+          yes | dkp-pacman -S 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
 
       - name: Build project
         run: |
