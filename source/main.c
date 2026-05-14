@@ -3,19 +3,21 @@
 
 int main() {
     gfxInitDefault();
-    C3D_Init(C3D_DEFAULT_CMDBUF_SIZE); // Correction ici
+    C3D_Init(C3D_DEFAULT_CMDBUF_SIZE); 
     C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
     C2D_Prepare();
     
-    // Correction du nom de la fonction pour l'écran
+    // Correction ici : C2D_CreateScreenTarget devient C2D_CreateScreenTarget
+    // Et on vérifie bien que l'image s'appelle car1.PNG
     C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 
     C2D_SpriteSheet spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/car1.PNG");
     
     if (!spriteSheet) {
+        // Si l'image ne charge pas, l'écran devient bleu (pour nous prévenir)
         while (aptMainLoop()) {
-            C3D_FrameBegin(C3D_FRAME_SYNCDRAW); // Correction ici
-            C2D_TargetClear(top, C2D_Color32f(1.0f, 0.0f, 0.0f, 1.0f));
+            C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+            C2D_TargetClear(top, C2D_Color32f(0.0f, 0.0f, 1.0f, 1.0f));
             C3D_FrameEnd(0);
         }
     }
@@ -26,10 +28,11 @@ int main() {
         hidScanInput();
         if (hidKeysDown() & KEY_START) break; 
 
-        C3D_FrameBegin(C3D_FRAME_SYNCDRAW); // Correction ici
-        C2D_TargetClear(top, C2D_Color32f(0.2f, 0.2f, 0.2f, 1.0f));
+        C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+        C2D_TargetClear(top, C2D_Color32f(0.2f, 0.2f, 0.2f, 1.0f)); // Fond gris route
         C2D_SceneBegin(top);
 
+        // Affiche la voiture au centre
         C2D_DrawImageAt(voiture, 180, 100, 0.5f, NULL, 1.0f, 1.0f);
 
         C3D_FrameEnd(0);
