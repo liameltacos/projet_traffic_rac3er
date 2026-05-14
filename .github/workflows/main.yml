@@ -5,8 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # On utilise une image qui contient déjà citro2d et citro3d !
-    container: devkitpro/devkitarm:latest
+    container: devkitpro/devkitarm:20240417
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -14,7 +13,7 @@ jobs:
       - name: Build project
         run: |
           make
-
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
