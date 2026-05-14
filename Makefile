@@ -1,3 +1,6 @@
+# Chemin vers le compilateur
+CC          := /opt/devkitpro/devkitARM/bin/arm-none-eabi-gcc
+
 # Nom du fichier de sortie
 TARGET      := TrafficRacer
 
@@ -15,4 +18,4 @@ all: $(TARGET).3dsx
 $(TARGET).3dsx: $(TARGET).elf
 
 $(TARGET).elf: source/main.c
-	arm-none-eabi-gcc $(CFLAGS) source/main.c $(LDFLAGS) $(LIBS) -o $(TARGET).elf
+	$(CC) $(CFLAGS) source/main.c $(LDFLAGS) $(LIBS) -o $(TARGET).elf
