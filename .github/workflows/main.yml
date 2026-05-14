@@ -12,7 +12,8 @@ jobs:
 
       - name: Install 3DS Libraries
         run: |
-          dkp-pacman -Syu --noconfirm 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
+          # Commande exacte pour installer les outils de dessin 3DS
+          dkp-pacman -Syu --noconfirm 3ds-citro2d 3ds-citro3d 3ds-libctru
 
       - name: Build project
         run: |
