@@ -5,15 +5,14 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: devkitpro/devkitarm:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install 3DS Libraries
-        run: |
-          # On utilise les noms de paquets ultra-simplifiés
-          dkp-pacman -Syu --noconfirm citro2d citro3d libctru 3ds-dev
+      - name: Setup devkitPro
+        uses: devkitpro/setup-devkitpro@v1
+        with:
+          dkp-packages: 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
 
       - name: Build project
         run: |
