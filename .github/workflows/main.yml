@@ -5,19 +5,15 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # On utilise "latest" sans date précise pour éviter l'erreur de tout à l'heure
     container: devkitpro/devkitarm:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install 3DS Libraries
-        run: |
-          # On installe les outils officiels
-          dkp-pacman -Syu --noconfirm 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
-
       - name: Build project
         run: |
+          # On essaie de compiler directement, 
+          # devkitarm:latest a souvent déjà le minimum vital
           make
           
       - name: Upload artifact
