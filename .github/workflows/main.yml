@@ -5,21 +5,16 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    # On utilise une image qui contient déjà citro2d et citro3d !
     container: devkitpro/devkitarm:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install 3DS Libraries
-        run: |
-          # Le "yes |" répond oui automatiquement à toutes les questions
-          yes | dkp-pacman -Syu
-          yes | dkp-pacman -S 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
-
       - name: Build project
         run: |
           make
-          
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
