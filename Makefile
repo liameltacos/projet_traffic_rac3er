@@ -1,22 +1,22 @@
+ifneq ($(strip $(DEVKITARM)),)
+include $(DEVKITARM)/3ds_rules
+endif
+
 TARGET      := TrafficRacer
 SOURCES     := source
 LIBS        := -lcitro2d -lcitro3d -lctru -lm
 
-# Chemins vers les outils
-ifeq ($(strip $(DEVKITPRO)),)
-$(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>devkitPro")
-endif
+# Chemins pour les outils
+export INCLUDE	:= $(DEVKITPRO)/libctru/include $(DEVKITPRO)/libcitro2d/include $(DEVKITPRO)/libcitro3d/include
+export LIBPATHS	:= $(DEVKITPRO)/libctru/lib $(DEVKITPRO)/libcitro2d/lib $(DEVKITPRO)/libcitro3d/lib
 
-include $(DEVKITARM)/3ds_rules
-
-# Options de compilation pour la 3DS
-ARCH    := -march=armv6k -mtune=mpcore -mfloat-abi=hard -mfpu=vfp
-CFLAGS  := -g -Wall -O2 -mword-relocations $(ARCH) -I$(DEVKITPRO)/libctru/include -I$(DEVKITPRO)/libcitro2d/include
-LDFLAGS := -specs=3dsx.specs -g $(ARCH) -L$(DEVKITPRO)/libctru/lib -L$(DEVKITPRO)/libcitro2d/lib
+ARCH	:= -march=armv6k -mtune=mpcore -mfloat-abi=hard -mfpu=vfp
+CFLAGS	:= -g -Wall -O2 -mword-relocations $(ARCH) $(foreach dir,$(INCLUDE),-I$(dir))
+LDFLAGS	:= -specs=3dsx.specs -g $(ARCH) $(foreach dir,$(LIBPATHS),-L$(dir))
 
 all: $(TARGET).3dsx
 
 $(TARGET).3dsx: $(TARGET).elf
 
-$(TARGET).elf: $(SOURCES)/main.c
-	arm-none-eabi-gcc $(CFLAGS) $(SOURCES)/main.c $(LDFLAGS) $(LIBS) -o $(TARGET).elf
+$(TARGET).elf: source/main.c
+	arm-none-eabi-gcc $(CFLAGS) source/main.c $(LDFLAGS) $(LIBS) -o $(TARGET).elf
