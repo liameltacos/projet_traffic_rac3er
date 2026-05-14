@@ -3,15 +3,17 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    # On utilise une version où tout est DÉJÀ dedans
     container: devkitpro/devkitarm:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install 3DS Libraries
-        run: |
-          yes | dkp-pacman -Syu --noconfirm 3ds-dev 3ds-citro3d 3ds-citro2d 3ds-libctru
+
       - name: Build project
-        run: make
+        run: |
+          # On ne télécharge rien, on essaie de compiler direct
+          make
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
